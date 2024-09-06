@@ -29,31 +29,18 @@ public class Grid
 
                         if (yi >= 0 && yi < grid.length && xj >= 0 && xj < grid[y].length) {
                             if (grid[yi][xj] == 1) {
-                                livingNeighbors += 1;
+                                livingNeighbors++;
                             }
                         }
                     }
                 }
 
-                if (grid[y][x] == 1) {
-                    if (livingNeighbors < 2 || livingNeighbors > 3) {
-                        tempGrid[y][x] = 0;
-                    } else {
-                        tempGrid[y][x] = 1;
-                    }
-                } else {
-                    if (livingNeighbors == 3) {
-                        tempGrid[y][x] = 1;
-                    } else {
-                        tempGrid[y][x] = 0;
-                    }
+                if ((grid[y][x] == 1 && !(livingNeighbors < 2 || livingNeighbors > 3)) || livingNeighbors == 3) {
+                    tempGrid[y][x] = 1;
                 }
             }
         }
-
-        for (int y = 0; y < tempGrid.length; y++) {
-            System.arraycopy(tempGrid[y], 0, grid[y], 0, tempGrid[y].length);
-        }
+        grid = tempGrid;
     }
 
     public void put(int x, int y)

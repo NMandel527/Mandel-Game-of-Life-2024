@@ -19,9 +19,8 @@ class GridTest
 
         //when
         grid.nextGen();
-        grid.nextGen();
 
         //then
-        assertEquals("0110\n1010\n0010\n0000\n", grid.toString());
+        assertEquals("0100\n0110\n1010\n0000\n", grid.toString());
     }
 }
