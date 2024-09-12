@@ -1,8 +1,11 @@
 package mandel.gameoflife;
 
+import java.util.Arrays;
+
 public class Grid
 {
     private int[][] grid;
+    private int[][] initial;
 
     public Grid(int width, int height) {
         grid = new int[height][width];
@@ -43,9 +46,43 @@ public class Grid
         grid = tempGrid;
     }
 
+    public int getWidth() {
+        return grid[0].length;
+    }
+
+    public int getHeight() {
+        return grid.length;
+    }
+
     public void put(int x, int y)
     {
         grid[y][x] = 1;
+    }
+
+    public void remove(int x, int y)
+    {
+        grid[y][x] = 0;
+    }
+
+    public void clear()
+    {
+        for (int[] box : grid) {
+            Arrays.fill(box, 0);
+        }
+    }
+
+    public void setInitial()
+    {
+        initial = grid;
+    }
+
+    public void reset()
+    {
+        grid = initial;
+    }
+
+    public boolean isAlive (int x, int y) {
+        return grid[y][x] == 1;
     }
 
     public String toString()
