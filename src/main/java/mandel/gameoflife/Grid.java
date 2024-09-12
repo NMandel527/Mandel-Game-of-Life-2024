@@ -81,7 +81,7 @@ public class Grid
         grid = initial;
     }
 
-    public boolean isAlive (int x, int y) {
+    public boolean isAlive(int x, int y) {
         return grid[y][x] == 1;
     }
 

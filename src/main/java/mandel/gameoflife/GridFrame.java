@@ -20,8 +20,6 @@ public class GridFrame extends JFrame {
         GridComponent gridComponent = new GridComponent(grid);
         add(gridComponent, BorderLayout.CENTER);
 
-        JPanel panel = new JPanel();
-
         playAndPause = new JButton("Play");
         next = new JButton("Next");
         clear = new JButton("Clear");
@@ -70,6 +68,8 @@ public class GridFrame extends JFrame {
             grid.reset();
             repaint();
         });
+
+        JPanel panel = new JPanel();
 
         panel.add(playAndPause);
         panel.add(next);

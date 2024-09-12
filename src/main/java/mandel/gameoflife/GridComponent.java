@@ -8,15 +8,15 @@ import java.awt.event.MouseEvent;
 public class GridComponent extends JComponent {
 
     private final Grid grid;
-    private final int CELLSIZE = 20;
+    private final int cellSize = 20;
 
     public GridComponent(Grid grid) {
         this.grid = grid;
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                int x = e.getX() / CELLSIZE;
-                int y = e.getY() / CELLSIZE;
+                int x = e.getX() / cellSize;
+                int y = e.getY() / cellSize;
 
                 if (grid.isAlive(x, y)) {
                     grid.remove(x, y);
@@ -37,10 +37,10 @@ public class GridComponent extends JComponent {
         for (int y = 0; y < grid.getHeight(); y++) {
             for (int x = 0; x < grid.getWidth(); x++) {
                 g.setColor(Color.GRAY);
-                g.drawRect(x * CELLSIZE, y * CELLSIZE, CELLSIZE, CELLSIZE);
+                g.drawRect(x * cellSize, y * cellSize, cellSize, cellSize);
                 if (grid.isAlive(x, y)) {
                     g.setColor(Color.BLACK);
-                    g.fillRect(x * CELLSIZE, y * CELLSIZE, CELLSIZE, CELLSIZE);
+                    g.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
                 }
             }
         }
