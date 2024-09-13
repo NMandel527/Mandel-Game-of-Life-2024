@@ -32,15 +32,14 @@ public class GridComponent extends JComponent {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        g.setColor(Color.WHITE);
-
         for (int y = 0; y < grid.getHeight(); y++) {
             for (int x = 0; x < grid.getWidth(); x++) {
-                g.setColor(Color.GRAY);
-                g.drawRect(x * cellSize, y * cellSize, cellSize, cellSize);
                 if (grid.isAlive(x, y)) {
                     g.setColor(Color.BLACK);
                     g.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
+                } else {
+                    g.setColor(Color.GRAY);
+                    g.drawRect(x * cellSize, y * cellSize, cellSize, cellSize);
                 }
             }
         }
