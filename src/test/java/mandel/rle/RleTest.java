@@ -8,7 +8,7 @@ class RleTest {
     Rle rle = new Rle(10, 10);
 
     @Test
-    public void loadFromRLE() {
+    public void loadFromRle() {
         // given
         String rleContent = "x = 3, y = 3\nbob$2bo$3o!";
 
