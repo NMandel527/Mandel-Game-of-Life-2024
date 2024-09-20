@@ -4,15 +4,16 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class RLETest {
-    RLE rle = new RLE(10, 10);
+class RleTest {
+    Rle rle = new Rle(10, 10);
+
     @Test
     public void loadFromRLE() {
         // given
         String rleContent = "x = 3, y = 3\nbob$2bo$3o!";
 
         // when
-        rle.loadFromRLE(rleContent);
+        rle.loadFromRle(rleContent);
         int[][] grid = rle.getGrid();
 
         //then
@@ -29,12 +30,12 @@ class RLETest {
     }
 
     @Test
-    public void decodeRLE() {
+    public void decodeRle() {
         // given
         String encoded = "bob$2bo$3o!";
 
         // when
-        rle.decodeRLE(encoded);
+        rle.decodeRle(encoded);
         int[][] grid = rle.getGrid();
 
         // then
@@ -54,7 +55,7 @@ class RLETest {
     public void nextGen() {
         // given
         String rleContent = "x = 3, y = 3\nbob$2bo$3o!";
-        rle.loadFromRLE(rleContent);
+        rle.loadFromRle(rleContent);
 
         // when
         rle.nextGen();

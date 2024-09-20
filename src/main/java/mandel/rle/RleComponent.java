@@ -3,10 +3,10 @@ package mandel.rle;
 import javax.swing.*;
 import java.awt.*;
 
-public class RLEComponent extends JComponent{
-    private final RLE game;
+public class RleComponent extends JComponent {
+    private final Rle game;
 
-    public RLEComponent(RLE game) {
+    public RleComponent(Rle game) {
         this.game = game;
         Timer timer = new Timer(500, e -> {
             game.nextGen();
@@ -19,10 +19,10 @@ public class RLEComponent extends JComponent{
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        int[][] grid = game.getGrid();
-        int cellSize = 20;
-
         g.setColor(Color.LIGHT_GRAY);
+
+        int cellSize = 20;
+        int[][] grid = game.getGrid();
 
         for (int i = 0; i <= getWidth() / cellSize; i++) {
             g.drawLine(i * cellSize, 0, i * cellSize, getHeight());

@@ -8,10 +8,10 @@ public class Main {
         try {
             String filePath = "C:/Users/necha/Downloads/file.rle";
             String rleContent = new String(Files.readAllBytes(Paths.get(filePath)));
-            RLE game = new RLE(100, 80);
-            game.loadFromRLE(rleContent);
+            Rle game = new Rle(100, 80);
+            game.loadFromRle(rleContent);
 
-            RLEFrame frame = new RLEFrame(game);
+            RleFrame frame = new RleFrame(game);
             frame.setVisible(true);
 
         } catch (Exception e) {

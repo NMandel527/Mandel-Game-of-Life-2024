@@ -1,12 +1,13 @@
 package mandel.rle;
 
-public class RLE {
+public class Rle {
     private int[][] grid;
-    public RLE(int rows, int cols) {
+
+    public Rle(int rows, int cols) {
         this.grid = new int[rows][cols];
     }
 
-    public void loadFromRLE(String rleContent) {
+    public void loadFromRle(String rleContent) {
         String[] lines = rleContent.split("\n");
         StringBuilder rleInfo = new StringBuilder();
 
@@ -15,10 +16,10 @@ public class RLE {
                 rleInfo.append(line);
             }
         }
-        decodeRLE(rleInfo.toString());
+        decodeRle(rleInfo.toString());
     }
 
-    public void decodeRLE(String rle) {
+    public void decodeRle(String rle) {
         int row = 0;
         int col = 0;
         int count = 0;
@@ -47,8 +48,11 @@ public class RLE {
                         break;
                     case '!':
                         return;
+                    default:
+                        System.out.println("Invalid character: " + c);
+                        break;
                 }
-                count = 0;
+               count = 0;
             }
         }
     }
