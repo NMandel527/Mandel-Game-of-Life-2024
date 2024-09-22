@@ -25,13 +25,12 @@ public class GridComponent extends JComponent {
                     grid.put(x, y);
                 }
                 repaint();
+                grid.setInitial();
             }
         });
     }
 
     public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-
         super.paintComponent(g);
 
         g.setColor(Color.LIGHT_GRAY);

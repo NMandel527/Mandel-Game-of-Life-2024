@@ -1,5 +1,8 @@
 package mandel.gameoflife;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.Arrays;
 
 public class Grid
@@ -11,14 +14,21 @@ public class Grid
         grid = new int[height][width];
     }
 
-    public void loadFromRle(String rleContent) {
-        String[] lines = rleContent.split("\n");
+    public void loadFromRle(String filePath) {
         StringBuilder rleInfo = new StringBuilder();
+        String line;
 
-        for (String line : lines) {
-            if (!line.startsWith("#") && !line.startsWith("x")) {
-                rleInfo.append(line);
+        try {
+            URL url = new URL(filePath);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
+            while ((line = reader.readLine()) != null) {
+                if (!line.startsWith("#") && !line.startsWith("x")) {
+                    rleInfo.append(line);
+                }
             }
+            reader.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         decodeRle(rleInfo.toString());
     }
@@ -42,8 +52,10 @@ public class Grid
                         break;
                     case 'o':
                         for (int j = 0; j < count; j++) {
-                            grid[row][col] = 1;
-                            col++;
+                            if (row < getHeight() && col < getWidth()) {
+                                grid[row][col] = 1;
+                                col++;
+                            }
                         }
                         break;
                     case '$':
