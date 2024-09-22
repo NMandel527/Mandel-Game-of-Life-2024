@@ -11,6 +11,56 @@ public class Grid
         grid = new int[height][width];
     }
 
+    public void loadFromRle(String rleContent) {
+        String[] lines = rleContent.split("\n");
+        StringBuilder rleInfo = new StringBuilder();
+
+        for (String line : lines) {
+            if (!line.startsWith("#") && !line.startsWith("x")) {
+                rleInfo.append(line);
+            }
+        }
+        decodeRle(rleInfo.toString());
+    }
+
+    public void decodeRle(String rle) {
+        int row = 0;
+        int col = 0;
+        int count = 0;
+
+        for (int i = 0; i < rle.length(); i++) {
+            char c = rle.charAt(i);
+            if (Character.isDigit(c)) {
+                count = Integer.parseInt(String.valueOf(c));;
+            } else {
+                if (count == 0) {
+                    count = 1;
+                }
+                switch (c) {
+                    case 'b':
+                        col += count;
+                        break;
+                    case 'o':
+                        for (int j = 0; j < count; j++) {
+                            grid[row][col] = 1;
+                            col++;
+                        }
+                        break;
+                    case '$':
+                        row += count;
+                        col = 0;
+                        break;
+                    case '!':
+                        return;
+                    default:
+                        System.out.println("Invalid character: " + c);
+                        break;
+                }
+                count = 0;
+            }
+        }
+    }
+
     public void nextGen()
     {
         int [][] tempGrid = new int[grid.length][grid[0].length];
@@ -83,6 +133,10 @@ public class Grid
 
     public boolean isAlive(int x, int y) {
         return grid[y][x] == 1;
+    }
+
+    public int[][] getGrid() {
+        return grid;
     }
 
     public String toString()
