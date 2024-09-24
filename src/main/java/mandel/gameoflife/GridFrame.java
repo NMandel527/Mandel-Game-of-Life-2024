@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 
 public class GridFrame extends JFrame {
-    Grid grid = new Grid(80, 80);
     private final Timer timer;
     private final JButton playAndPause;
     private final JButton next;
@@ -12,7 +11,7 @@ public class GridFrame extends JFrame {
     private final JButton reset;
     private boolean isPlaying;
 
-    public GridFrame() {
+    public GridFrame(Grid grid) {
         setSize(1000, 800);
         setTitle("Game of Life");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -32,7 +31,7 @@ public class GridFrame extends JFrame {
 
         isPlaying = false;
 
-        timer = new Timer(1000, e -> {
+        timer = new Timer(500, e -> {
             grid.nextGen();
             repaint();
         });
