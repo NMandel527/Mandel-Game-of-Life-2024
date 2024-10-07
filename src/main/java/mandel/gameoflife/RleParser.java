@@ -6,6 +6,7 @@ import java.awt.datatransfer.DataFlavor;
 import java.io.*;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+
 import org.apache.commons.io.IOUtils;
 
 public class RleParser {
@@ -36,7 +37,8 @@ public class RleParser {
                     File file = new File(clipboardText);
                     if (file.exists()) {
                         try {
-                            rleInfo.append(IOUtils.toString(new FileInputStream(file), StandardCharsets.UTF_8)).append("\n");
+                            rleInfo.append(IOUtils.toString(new FileInputStream(file),
+                                    StandardCharsets.UTF_8)).append("\n");
                         } catch (IOException e) {
                             System.out.println("Error reading from the file: " + e.getMessage());
                         }
@@ -47,8 +49,7 @@ public class RleParser {
                 boolean validRle = validate(rleInfo.toString());
                 if (validRle) {
                     processRle(rleInfo.toString());
-                }
-                else {
+                } else {
                     System.out.println("Invalid RLE");
                 }
             } else {
@@ -64,19 +65,18 @@ public class RleParser {
 
         if (rle.isEmpty()) {
             isValid = false;
-        }
-        else {
+        } else {
             int length = rle.length();
             for (int i = 0, startIndex = 0; i <= length; i++) {
                 if (i == length || rle.charAt(i) == '\n') {
                     String rleLine = rle.substring(startIndex, i).trim();
-                    if (!rleLine.isEmpty() &&
-                            !(rleLine.charAt(0) == '#' ||
-                                    rleLine.charAt(0) == 'x' ||
-                                    rleLine.charAt(0) == 'o' ||
-                                    rleLine.charAt(0) == 'b' ||
-                                    rleLine.charAt(0) == '$' ||
-                                    rleLine.charAt(0) == '!')) {
+                    if (!rleLine.isEmpty()
+                            && !(rleLine.charAt(0) == '#'
+                            || rleLine.charAt(0) == 'x'
+                            || rleLine.charAt(0) == 'o'
+                            || rleLine.charAt(0) == 'b'
+                            || rleLine.charAt(0) == '$'
+                            || rleLine.charAt(0) == '!')) {
                         isValid = false;
                         break;
                     }
@@ -103,43 +103,45 @@ public class RleParser {
             }
         }
     }
+
     public void getDimensions(String dim) {
-        StringBuilder xDim = new StringBuilder();
-        StringBuilder yDim = new StringBuilder();
+        StringBuilder xdim = new StringBuilder();
+        StringBuilder ydim = new StringBuilder();
 
         int i = 0;
 
         while (i < dim.length() && dim.charAt(i) != 'y') {
             if (dim.charAt(i) >= '0' && dim.charAt(i) <= '9') {
-                xDim.append(dim.charAt(i));
+                xdim.append(dim.charAt(i));
             }
             i++;
         }
 
         while (i < dim.length() && dim.charAt(i) != 'r') {
             if (dim.charAt(i) >= '0' && dim.charAt(i) <= '9') {
-                yDim.append(dim.charAt(i));
+                ydim.append(dim.charAt(i));
             }
             i++;
         }
 
-        if (!xDim.isEmpty()) {
-            width = Integer.parseInt(xDim.toString());
+        if (!xdim.isEmpty()) {
+            width = Integer.parseInt(xdim.toString());
         }
-        if (!yDim.isEmpty()) {
-            height = Integer.parseInt(yDim.toString());
+        if (!ydim.isEmpty()) {
+            height = Integer.parseInt(ydim.toString());
         }
     }
 
     public void decodeRle(String rle) {
-        int row = grid.length/2 - height/2;
-        int col = grid[0].length/2 - width/2;
+        int row = grid.length / 2 - height / 2;
+        int col = grid[0].length / 2 - width / 2;
         int count = 0;
 
         for (int i = 0; i < rle.length(); i++) {
             char c = rle.charAt(i);
             if (Character.isDigit(c)) {
-                count = Integer.parseInt(String.valueOf(c));;
+                count = Integer.parseInt(String.valueOf(c));
+                ;
             } else {
                 if (count == 0) {
                     count = 1;
@@ -157,7 +159,7 @@ public class RleParser {
                         break;
                     case '$':
                         row += count;
-                        col = grid[0].length/2 - width/2;
+                        col = grid[0].length / 2 - width / 2;
                         break;
                     case '!':
                         return;

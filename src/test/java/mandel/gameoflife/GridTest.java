@@ -26,8 +26,7 @@ class GridTest
             for (int j = 0; j < grid.getHeight(); j++) {
                 if (grid.isAlive(j, i)) {
                     expected.append('1');
-                }
-                else {
+                } else {
                     expected.append('0');
                 }
             }
