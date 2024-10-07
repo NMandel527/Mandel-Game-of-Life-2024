@@ -23,33 +23,33 @@ public class RleParser {
 
         try {
             Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-            String data = clipboard.isDataFlavorAvailable(DataFlavor.stringFlavor) ?
-                    (String) clipboard.getData(DataFlavor.stringFlavor) : defaultRle;
-                if (data.startsWith("http://") || data.startsWith("https://")) {
-                    try (InputStream inputStream = new URL(data).openStream()) {
-                        rleInfo.append(IOUtils.toString(inputStream, StandardCharsets.UTF_8));
+            String data = clipboard.isDataFlavorAvailable(DataFlavor.stringFlavor)
+                    ? (String) clipboard.getData(DataFlavor.stringFlavor) : defaultRle;
+            if (data.startsWith("http://") || data.startsWith("https://")) {
+                try (InputStream inputStream = new URL(data).openStream()) {
+                    rleInfo.append(IOUtils.toString(inputStream, StandardCharsets.UTF_8));
+                } catch (IOException e) {
+                    System.out.println("Error reading from the URL: " + e.getMessage());
+                }
+            } else {
+                File file = new File(data);
+                if (file.exists()) {
+                    try {
+                        rleInfo.append(IOUtils.toString(new FileInputStream(file),
+                                StandardCharsets.UTF_8)).append("\n");
                     } catch (IOException e) {
-                        System.out.println("Error reading from the URL: " + e.getMessage());
+                        System.out.println("Error reading from the file: " + e.getMessage());
                     }
                 } else {
-                    File file = new File(data);
-                    if (file.exists()) {
-                        try {
-                            rleInfo.append(IOUtils.toString(new FileInputStream(file),
-                                    StandardCharsets.UTF_8)).append("\n");
-                        } catch (IOException e) {
-                            System.out.println("Error reading from the file: " + e.getMessage());
-                        }
-                    } else {
-                        rleInfo.append(data).append("\n");
-                    }
+                    rleInfo.append(data).append("\n");
                 }
-                boolean validRle = validate(rleInfo.toString());
-                if (validRle) {
-                    processRle(rleInfo.toString());
-                } else {
-                    processRle(defaultRle);
-                }
+            }
+            boolean validRle = validate(rleInfo.toString());
+            if (validRle) {
+                processRle(rleInfo.toString());
+            } else {
+                processRle(defaultRle);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
