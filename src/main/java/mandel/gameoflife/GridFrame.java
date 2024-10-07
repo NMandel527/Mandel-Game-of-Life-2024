@@ -20,7 +20,6 @@ public class GridFrame extends JFrame {
         GridComponent gridComponent = new GridComponent(grid, cellsize);
         add(gridComponent, BorderLayout.CENTER);
 
-        JButton paste = new JButton("Paste");
         playAndPause = new JButton("Play");
         next = new JButton("Next");
         clear = new JButton("Clear");
@@ -31,6 +30,7 @@ public class GridFrame extends JFrame {
         setButtonColors(clear);
         setButtonColors(reset);
 
+        JButton paste = new JButton("Paste");
         paste.setBackground(Color.BLACK);
         paste.setForeground(Color.WHITE);
 
@@ -41,9 +41,10 @@ public class GridFrame extends JFrame {
             repaint();
         });
 
+        String defaultRle = "x = 3, y = 3, rule = B3/S23\n bob$2bo$3o!";
         paste.addActionListener(e -> {
             RleParser rle = new RleParser(grid.getGrid());
-            rle.loadFromRle();
+            rle.loadFromRle(defaultRle);
             repaint();
         });
 

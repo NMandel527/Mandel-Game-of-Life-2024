@@ -1,7 +1,6 @@
 package mandel.gameoflife;
 
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class RleParserTest
@@ -13,7 +12,8 @@ class RleParserTest
         RleParser rle = new RleParser(grid.getGrid());
 
         // when
-        rle.loadFromRle();
+        String defaultRle = "x = 3, y = 3, rule = B3/S23\n bob$2bo$3o!";
+        rle.loadFromRle(defaultRle);
         int[][] rleGrid = grid.getGrid();
 
         // then

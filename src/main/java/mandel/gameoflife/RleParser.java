@@ -18,23 +18,21 @@ public class RleParser {
         this.grid = grid;
     }
 
-    public void loadFromRle() {
+    public void loadFromRle(String defaultRle) {
         StringBuilder rleInfo = new StringBuilder();
 
         try {
             Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-
-            if (clipboard.isDataFlavorAvailable(DataFlavor.stringFlavor)) {
-                String clipboardText = (String) clipboard.getData(DataFlavor.stringFlavor);
-
-                if (clipboardText.startsWith("http://") || clipboardText.startsWith("https://")) {
-                    try (InputStream inputStream = new URL(clipboardText).openStream()) {
+            String data = clipboard.isDataFlavorAvailable(DataFlavor.stringFlavor) ?
+                    (String) clipboard.getData(DataFlavor.stringFlavor) : defaultRle;
+                if (data.startsWith("http://") || data.startsWith("https://")) {
+                    try (InputStream inputStream = new URL(data).openStream()) {
                         rleInfo.append(IOUtils.toString(inputStream, StandardCharsets.UTF_8));
                     } catch (IOException e) {
                         System.out.println("Error reading from the URL: " + e.getMessage());
                     }
                 } else {
-                    File file = new File(clipboardText);
+                    File file = new File(data);
                     if (file.exists()) {
                         try {
                             rleInfo.append(IOUtils.toString(new FileInputStream(file),
@@ -43,18 +41,15 @@ public class RleParser {
                             System.out.println("Error reading from the file: " + e.getMessage());
                         }
                     } else {
-                        rleInfo.append(clipboardText).append("\n");
+                        rleInfo.append(data).append("\n");
                     }
                 }
                 boolean validRle = validate(rleInfo.toString());
                 if (validRle) {
                     processRle(rleInfo.toString());
                 } else {
-                    System.out.println("Invalid RLE");
+                    processRle(defaultRle);
                 }
-            } else {
-                System.out.println("Clipboard does not contain text data.");
-            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -76,7 +71,8 @@ public class RleParser {
                             || rleLine.charAt(0) == 'o'
                             || rleLine.charAt(0) == 'b'
                             || rleLine.charAt(0) == '$'
-                            || rleLine.charAt(0) == '!')) {
+                            || rleLine.charAt(0) == '!'
+                            || Character.isDigit(rleLine.charAt(0)))) {
                         isValid = false;
                         break;
                     }
