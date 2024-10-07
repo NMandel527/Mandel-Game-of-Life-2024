@@ -2,12 +2,10 @@ package mandel.gameoflife;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class RleParserTest {

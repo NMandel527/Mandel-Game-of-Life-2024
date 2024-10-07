@@ -17,7 +17,7 @@ public class RleParser {
 
     public RleParser(int[][] grid, Clipboard clipboard) {
         this.grid = grid;
-        this.clipboard = clipboard; // Use injected clipboard
+        this.clipboard = clipboard;
     }
 
     public RleParser(int[][] grid) {
