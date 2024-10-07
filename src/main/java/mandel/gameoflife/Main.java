@@ -2,11 +2,7 @@ package mandel.gameoflife;
 
 public class Main {
     public static void main(String[] args) {
-        String filePath = "https://conwaylife.com/patterns/glider.rle";
-
-        Grid grid = new Grid(100, 80);
-        grid.loadFromRle(filePath);
-
+        Grid grid = new Grid(100, 100);
         new GridFrame(grid).setVisible(true);
     }
 }

@@ -12,13 +12,15 @@ public class GridFrame extends JFrame {
     private boolean isPlaying;
 
     public GridFrame(Grid grid) {
-        setSize(1000, 800);
+        setSize(800, 800);
         setTitle("Game of Life");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        int cellsize = Math.min(getHeight() / grid.getHeight(), getWidth() / grid.getWidth());
 
-        GridComponent gridComponent = new GridComponent(grid);
+        GridComponent gridComponent = new GridComponent(grid, cellsize);
         add(gridComponent, BorderLayout.CENTER);
 
+        JButton paste = new JButton("Paste");
         playAndPause = new JButton("Play");
         next = new JButton("Next");
         clear = new JButton("Clear");
@@ -29,10 +31,19 @@ public class GridFrame extends JFrame {
         setButtonColors(clear);
         setButtonColors(reset);
 
+        paste.setBackground(Color.BLACK);
+        paste.setForeground(Color.WHITE);
+
         isPlaying = false;
 
         timer = new Timer(500, e -> {
             grid.nextGen();
+            repaint();
+        });
+
+        paste.addActionListener(e -> {
+            RleParser rle = new RleParser(grid.getGrid());
+            rle.loadFromRle();
             repaint();
         });
 
@@ -68,18 +79,22 @@ public class GridFrame extends JFrame {
             repaint();
         });
 
-        JPanel panel = new JPanel();
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 
-        panel.add(playAndPause);
-        panel.add(next);
-        panel.add(reset);
-        panel.add(clear);
+        buttonPanel.add(playAndPause);
+        buttonPanel.add(next);
+        buttonPanel.add(clear);
+        buttonPanel.add(reset);
+
+        JPanel panel = new JPanel(new BorderLayout());
+        panel.add(buttonPanel, BorderLayout.CENTER);
+        panel.add(paste, BorderLayout.WEST);
 
         add(panel, BorderLayout.SOUTH);
     }
 
-    public void setButtonColors(JButton button)
-    {
+    public void setButtonColors(JButton button) {
         button.setBackground(Color.BLUE);
         button.setForeground(Color.WHITE);
     }

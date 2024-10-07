@@ -7,10 +7,12 @@ import java.awt.event.MouseEvent;
 
 public class GridComponent extends JComponent {
     private final Grid grid;
-    private final int cellSize = 20;
+    private final int cellSize;
 
-    public GridComponent(Grid grid) {
+    public GridComponent(Grid grid, int cellSize) {
         this.grid = grid;
+        this.cellSize = cellSize;
+
         grid.setInitial();
 
         addMouseListener(new MouseAdapter() {
@@ -30,12 +32,11 @@ public class GridComponent extends JComponent {
         });
     }
 
-    public void paintComponent(Graphics g) {
+    @Override
+    protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
         g.setColor(Color.LIGHT_GRAY);
-
-        int cellSize = 20;
 
         for (int i = 0; i <= getWidth() / cellSize; i++) {
             g.drawLine(i * cellSize, 0, i * cellSize, getHeight());
@@ -47,11 +48,10 @@ public class GridComponent extends JComponent {
         for (int y = 0; y < grid.getHeight(); y++) {
             for (int x = 0; x < grid.getWidth(); x++) {
                 if (grid.isAlive(x, y)) {
-                    g.setColor(Color.BLACK);
+                    g.setColor(Color.GREEN);
                     g.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
                 }
             }
         }
     }
 }
-
