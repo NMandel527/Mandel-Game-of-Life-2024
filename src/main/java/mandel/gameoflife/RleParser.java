@@ -119,13 +119,8 @@ public class RleParser {
             }
             i++;
         }
-
-        if (!xdim.isEmpty()) {
-            width = Integer.parseInt(xdim.toString());
-        }
-        if (!ydim.isEmpty()) {
-            height = Integer.parseInt(ydim.toString());
-        }
+        width = Integer.parseInt(xdim.toString());
+        height = Integer.parseInt(ydim.toString());
     }
 
     public void decodeRle(String rle) {
