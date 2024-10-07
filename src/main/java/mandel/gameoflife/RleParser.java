@@ -3,28 +3,41 @@ package mandel.gameoflife;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
 import java.io.*;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-
 import org.apache.commons.io.IOUtils;
 
 public class RleParser {
     private int width;
     private int height;
     private final int[][] grid;
+    private final Clipboard clipboard;
+
+    public RleParser(int[][] grid, Clipboard clipboard) {
+        this.grid = grid;
+        this.clipboard = clipboard; // Use injected clipboard
+    }
 
     public RleParser(int[][] grid) {
         this.grid = grid;
+        clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
     }
 
     public void loadFromRle(String defaultRle) {
         StringBuilder rleInfo = new StringBuilder();
 
         try {
-            Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-            String data = clipboard.isDataFlavorAvailable(DataFlavor.stringFlavor)
-                    ? (String) clipboard.getData(DataFlavor.stringFlavor) : defaultRle;
+            String data = null;
+            if (clipboard.isDataFlavorAvailable(DataFlavor.stringFlavor)) {
+                Transferable transferable = clipboard.getContents(null);
+                if (transferable != null) {
+                    data = (String) transferable.getTransferData(DataFlavor.stringFlavor);
+                }
+            }
+            data = (data != null) ? data : defaultRle;
+
             if (data.startsWith("http://") || data.startsWith("https://")) {
                 try (InputStream inputStream = new URL(data).openStream()) {
                     rleInfo.append(IOUtils.toString(inputStream, StandardCharsets.UTF_8));
@@ -132,7 +145,6 @@ public class RleParser {
             char c = rle.charAt(i);
             if (Character.isDigit(c)) {
                 count = Integer.parseInt(String.valueOf(c));
-                ;
             } else {
                 if (count == 0) {
                     count = 1;
