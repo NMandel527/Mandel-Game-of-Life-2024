@@ -25,7 +25,7 @@ public class RleParser {
         clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
     }
 
-    public void loadFromRle(String defaultRle) {
+    public void loadFromRle() {
         StringBuilder rleInfo = new StringBuilder();
 
         try {
@@ -36,13 +36,12 @@ public class RleParser {
                     data = (String) transferable.getTransferData(DataFlavor.stringFlavor);
                 }
             }
-            data = (data != null) ? data : defaultRle;
 
             if (data.startsWith("http://") || data.startsWith("https://")) {
                 try (InputStream inputStream = new URL(data).openStream()) {
                     rleInfo.append(IOUtils.toString(inputStream, StandardCharsets.UTF_8));
                 } catch (IOException e) {
-                    System.out.println("Error reading from the URL: " + e.getMessage());
+                    e.printStackTrace();
                 }
             } else {
                 File file = new File(data);
@@ -51,17 +50,14 @@ public class RleParser {
                         rleInfo.append(IOUtils.toString(new FileInputStream(file),
                                 StandardCharsets.UTF_8)).append("\n");
                     } catch (IOException e) {
-                        System.out.println("Error reading from the file: " + e.getMessage());
+                        e.printStackTrace();
                     }
                 } else {
                     rleInfo.append(data).append("\n");
                 }
             }
-            boolean validRle = validate(rleInfo.toString());
-            if (validRle) {
+            if (validate(rleInfo.toString())) {
                 processRle(rleInfo.toString());
-            } else {
-                processRle(defaultRle);
             }
         } catch (Exception e) {
             e.printStackTrace();

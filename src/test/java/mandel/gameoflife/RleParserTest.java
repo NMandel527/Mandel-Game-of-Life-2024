@@ -21,8 +21,7 @@ class RleParserTest {
         RleParser rle = new RleParser(grid.getGrid(), mockClipboard);
 
         // when
-        String defaultRle = "x = 3, y = 3, rule = B3/S23\nbob$2bo$3o!";
-        rle.loadFromRle(defaultRle);
+        rle.loadFromRle();
         int[][] rleGrid = grid.getGrid();
 
         // then

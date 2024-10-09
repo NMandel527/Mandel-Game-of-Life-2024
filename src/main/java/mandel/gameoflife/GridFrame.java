@@ -41,10 +41,9 @@ public class GridFrame extends JFrame {
             repaint();
         });
 
-        String defaultRle = "x = 3, y = 3, rule = B3/S23\n bob$2bo$3o!";
         paste.addActionListener(e -> {
             RleParser rle = new RleParser(grid.getGrid());
-            rle.loadFromRle(defaultRle);
+            rle.loadFromRle();
             repaint();
         });
 
