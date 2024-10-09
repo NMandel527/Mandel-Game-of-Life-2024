@@ -1,8 +1,4 @@
 package mandel.gameoflife;
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.URL;
 import java.util.Arrays;
 
 public class Grid
@@ -11,66 +7,9 @@ public class Grid
     private int[][] initial;
 
     public Grid(int width, int height) {
-        grid = new int[height][width];
-    }
-
-    public void loadFromRle(String filePath) {
-        StringBuilder rleInfo = new StringBuilder();
-        String line;
-
-        try {
-            URL url = new URL(filePath);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
-            while ((line = reader.readLine()) != null) {
-                if (!line.startsWith("#") && !line.startsWith("x")) {
-                    rleInfo.append(line);
-                }
-            }
-            reader.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        decodeRle(rleInfo.toString());
-    }
-
-    public void decodeRle(String rle) {
-        int row = 0;
-        int col = 0;
-        int count = 0;
-
-        for (int i = 0; i < rle.length(); i++) {
-            char c = rle.charAt(i);
-            if (Character.isDigit(c)) {
-                count = Integer.parseInt(String.valueOf(c));;
-            } else {
-                if (count == 0) {
-                    count = 1;
-                }
-                switch (c) {
-                    case 'b':
-                        col += count;
-                        break;
-                    case 'o':
-                        for (int j = 0; j < count; j++) {
-                            if (row < getHeight() && col < getWidth()) {
-                                grid[row][col] = 1;
-                                col++;
-                            }
-                        }
-                        break;
-                    case '$':
-                        row += count;
-                        col = 0;
-                        break;
-                    case '!':
-                        return;
-                    default:
-                        System.out.println("Invalid character: " + c);
-                        break;
-                }
-                count = 0;
-            }
-        }
+        int finalWidth = Math.max(width, 100);
+        int finalHeight = Math.max(height, 100);
+        grid = new int[finalWidth][finalHeight];
     }
 
     public void nextGen()

@@ -28,15 +28,13 @@ and has a GUI that allows the user to play the Game of Life.
 
 ## RLE
 This part of the program takes an RLE file format of a glider from Conway's Game of Life.
-Using the decoded file, it starts with the initial view of the glider and has the glider 
-continuously moves across the grid in a pattern.
+It can take it as one of three types: a file, a url, or plain text.
+When the user presses "Paste", the RLE will be copied from the clipboard and then decoded.
+Using the decoded file, the glider appears in the center of the grid and
+it will move in its pattern when the user presses play.
 
-![Glider](Screenshots+Videos/RLE_Glider.gif)
+![RLE](Screenshots+Videos/Paste_RLE.gif)
 
-The user can also click on calls while the glider is moving and those cells will be added
-into the glider's pattern.
-
-![Glider With Extra Cells Clicked](Screenshots+Videos/Glider+ExtraCells.gif)
 
 ### Links
 
