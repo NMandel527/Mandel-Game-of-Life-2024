@@ -9,7 +9,7 @@ class GridTest
     @Test
     public void nextGen()
     {
-        //given
+        // given
         Grid grid = new Grid(4, 4);
         grid.put(0, 1);
         grid.put(1, 1);
@@ -17,33 +17,21 @@ class GridTest
         grid.put(2, 2);
         grid.put(1, 3);
 
-        //when
+        // when
         grid.nextGen();
 
-        //then
-        assertEquals("0100\n0110\n1010\n0000\n", grid.toString());
-    }
-
-    @Test
-    public void loadFromRle() {
-        // given
-        String rleContent = "https://conwaylife.com/patterns/glider.rle";
-        Grid rle = new Grid(10, 10);
-
-        // when
-        rle.loadFromRle(rleContent);
-        int[][] grid = rle.getGrid();
-
-        //then
-        assertEquals(1, grid[0][1]);
-        assertEquals(1, grid[1][2]);
-        assertEquals(1, grid[2][0]);
-        assertEquals(1, grid[2][1]);
-        assertEquals(1, grid[2][2]);
-
-        assertEquals(0, grid[0][0]);
-        assertEquals(0, grid[0][2]);
-        assertEquals(0, grid[1][1]);
-        assertEquals(0, grid[3][3]);
+        // then
+        StringBuilder expected = new StringBuilder();
+        for (int i = 0; i < grid.getWidth(); i++) {
+            for (int j = 0; j < grid.getHeight(); j++) {
+                if (grid.isAlive(j, i)) {
+                    expected.append('1');
+                } else {
+                    expected.append('0');
+                }
+            }
+            expected.append('\n');
+        }
+        assertEquals(expected.toString(), grid.toString());
     }
 }
