@@ -1,42 +1,24 @@
 package mandel.gameoflife;
 
-import java.awt.Toolkit;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.Transferable;
 import java.io.*;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+
 import org.apache.commons.io.IOUtils;
 
 public class RleParser {
     private int width;
     private int height;
     private final int[][] grid;
-    private final Clipboard clipboard;
-
-    public RleParser(int[][] grid, Clipboard clipboard) {
-        this.grid = grid;
-        this.clipboard = clipboard;
-    }
 
     public RleParser(int[][] grid) {
         this.grid = grid;
-        clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
     }
 
-    public void loadFromRle() {
+    public void loadFromRle(String data) {
         StringBuilder rleInfo = new StringBuilder();
 
         try {
-            String data = null;
-            if (clipboard.isDataFlavorAvailable(DataFlavor.stringFlavor)) {
-                Transferable transferable = clipboard.getContents(null);
-                if (transferable != null) {
-                    data = (String) transferable.getTransferData(DataFlavor.stringFlavor);
-                }
-            }
-
             if (data.startsWith("http://") || data.startsWith("https://")) {
                 try (InputStream inputStream = new URL(data).openStream()) {
                     rleInfo.append(IOUtils.toString(inputStream, StandardCharsets.UTF_8));

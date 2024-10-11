@@ -14,22 +14,6 @@ public class GridComponent extends JComponent {
         this.cellSize = cellSize;
 
         grid.setInitial();
-
-        addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                int x = e.getX() / cellSize;
-                int y = e.getY() / cellSize;
-
-                if (grid.isAlive(x, y)) {
-                    grid.remove(x, y);
-                } else {
-                    grid.put(x, y);
-                }
-                repaint();
-                grid.setInitial();
-            }
-        });
     }
 
     @Override
@@ -53,5 +37,10 @@ public class GridComponent extends JComponent {
                 }
             }
         }
+    }
+
+    public int getCellSize()
+    {
+        return cellSize;
     }
 }
