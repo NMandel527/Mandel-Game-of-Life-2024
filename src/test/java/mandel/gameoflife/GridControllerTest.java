@@ -21,11 +21,12 @@ class GridControllerTest {
         Grid model = mock();
         GridComponent view = mock();
         RleParser parser = mock();
-        GridController controller = new GridController(model, view, parser);
 
         doReturn(10).when(view).getCellSize();
         doReturn(100).when(model).getWidth();
         doReturn(100).when(model).getHeight();
+
+        GridController controller = new GridController(model, view, parser);
 
         // when
         controller.toggleCell(50, 100);
@@ -41,12 +42,13 @@ class GridControllerTest {
         Grid model = mock();
         GridComponent view = mock();
         RleParser parser = mock();
-        GridController controller = new GridController(model, view, parser);
 
         doReturn(10).when(view).getCellSize();
         doReturn(100).when(model).getWidth();
         doReturn(100).when(model).getHeight();
         doReturn(true).when(model).isAlive(5, 10);
+
+        GridController controller = new GridController(model, view, parser);
 
         // when
         controller.toggleCell(50, 100);
